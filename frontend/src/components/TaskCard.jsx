@@ -1,8 +1,26 @@
 import { PenSquareIcon, Trash2Icon } from "lucide-react";
 import { Link } from "react-router";
-import { formatDate } from "../lib/utils.js";
+import toast from "react-hot-toast";
 
-const TaskCard = ({ task }) => {
+import { formatDate } from "../lib/utils.js";
+import api from "../lib/axios.js";
+
+const TaskCard = ({ task, setTasks }) => {
+  const handleDelete = async (e, id) => {
+    e.preventDefault();
+
+    if (!window.confirm("Are you sure you want to delete this task?")) return;
+
+    try {
+      await api.delete(`/tasks/${id}`);
+      setTasks(prev => prev.filter(task => task._id !== id));
+      toast.success("Task deleted successfully");
+    } catch (error) {
+      console.log("Error in handleDelete", error);
+      toast.error("Failed to delete Task");
+    }
+  };
+
   return (
     <Link
       to={`/task/${task._id}`}
@@ -17,7 +35,9 @@ const TaskCard = ({ task }) => {
           <div className="flex items-center gap-1">
             <PenSquareIcon className="size-4" />
 
-            <button className="btn btn-ghost btn-xs text-error">
+            <button
+              className="btn btn-ghost btn-xs text-error"
+              onClick={e => handleDelete(e, task._id)}>
               <Trash2Icon className="size-4" />
             </button>
           </div>

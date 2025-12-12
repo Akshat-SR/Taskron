@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar.jsx";
 import RateLimitedUI from "../components/RateLimitedUi.jsx";
 import TaskCard from "../components/TaskCard.jsx";
 import api from "../lib/axios.js";
+import TasksNotFound from "../components/TasksNotFound.jsx";
 
 const HomePage = () => {
   const [isRateLimited, setIsRateLimited] = useState(false);
@@ -42,10 +43,12 @@ const HomePage = () => {
           <div className="text-center text-primary py-10">Loading Tasks...</div>
         )}
 
+        {tasks.length === 0 && !isRateLimited && <TasksNotFound />}
+
         {tasks.length > 0 && !isRateLimited && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {tasks.map(task => (
-              <TaskCard key={task._id} task={task} />
+              <TaskCard key={task._id} task={task} setTasks={setTasks} />
             ))}
           </div>
         )}

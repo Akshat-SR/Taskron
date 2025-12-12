@@ -7,7 +7,8 @@ import TaskDetailPage from "./pages/TaskDetailPage.jsx";
 
 const App = () => {
   return (
-    <div data-theme="sunset">
+    <div className="relative h-full w-full">
+      <div class="absolute inset-0 -z-10 h-full w-full  [background:radial-gradient(125%_125%_at_50%_10%,#121c22_63%,#ff865b_110%)]" />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/create" element={<CreatePage />} />

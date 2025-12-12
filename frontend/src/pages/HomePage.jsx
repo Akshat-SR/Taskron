@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import toast from "react-hot-toast";
 
 import Navbar from "../components/Navbar.jsx";
 import RateLimitedUI from "../components/RateLimitedUi.jsx";
 import TaskCard from "../components/TaskCard.jsx";
+import api from "../lib/axios.js";
 
 const HomePage = () => {
   const [isRateLimited, setIsRateLimited] = useState(false);
@@ -14,7 +14,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const res = await axios.get("http://localhost:5001/api/tasks");
+        const res = await api.get("/tasks");
         console.log(res.data);
         setTasks(res.data);
         setIsRateLimited(false);
